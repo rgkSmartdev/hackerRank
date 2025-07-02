@@ -1,0 +1,43 @@
+package org.smartdev.onedarray;
+
+import java.io.*;
+import java.util.*;
+
+public class Solution {
+    private static boolean canWin(int leap, int[] game, boolean[] visited, int pos) {
+        if (pos >= game.length) return true;
+        if (pos < 0 || game[pos] != 0 || visited[pos]) return false;
+
+        visited[pos] = true;
+
+        return canWin(leap, game, visited, pos-1) ||
+                canWin(leap, game, visited, pos+1) ||
+                canWin(leap, game, visited, pos+leap);
+    }
+
+    public static boolean canWin(int leap, int[] game) {
+        return canWin(leap, game, new boolean[game.length], 0);
+    }
+
+    public static void main(String[] args) {
+        /* Enter your code here. Read input from STDIN. Print output to STDOUT. Your class should be named Solution. */
+        Scanner scan = new Scanner(System.in);
+
+        int q = scan.nextInt();
+
+        while (q-- > 0) {
+            int n = scan.nextInt();
+            int leap = scan.nextInt();
+
+            int[] game = new int[n];
+
+            for (int i = 0; i < n; i++) {
+                game[i] = scan.nextInt();
+            }
+
+            System.out.println( (canWin(leap, game)) ? "YES" : "NO" );
+        }
+        scan.close();
+
+    }
+}
